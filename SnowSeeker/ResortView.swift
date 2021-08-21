@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ResortView: View {
+    @Environment(\.horizontalSizeClass) var sizeClass
     let resort: Resort
 
     var body: some View {
@@ -18,18 +19,24 @@ struct ResortView: View {
                     .scaledToFit()
                 
                 Group {
+                    HStack {
+                        if sizeClass == .compact {
+                            Spacer()
+                            VStack { ResortDetailsView(resort: resort) }
+                            VStack { SkiDetailsView(resort: resort) }
+                            Spacer()
+                        } else {
+                            ResortDetailsView(resort: resort)
+                            Spacer().frame(height: 0)
+                            SkiDetailsView(resort: resort)
+                        }
+                    }
+                    
                     Text(resort.description)
                         .padding(.vertical)
-                    
-                    HStack {
-                        Spacer()
-                        ResortDetailsView(resort: resort)
-                        SkiDetailsView(resort: resort)
-                        Spacer()
-                    }
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-                    .padding(.top)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                        .padding(.top)
                     
                     Text("Facilities")
                         .font(.headline)
