@@ -70,20 +70,11 @@
 		E22D141226CEC9BE00645D5D /* SnowSeeker */ = {
 			isa = PBXGroup;
 			children = (
-				E22D141326CEC9BE00645D5D /* SnowSeekerApp.swift */,
-				E22D141526CEC9BE00645D5D /* ContentView.swift */,
-				E24A763526D0831B007F391A /* SkiDetailsView.swift */,
-				E24A763726D08357007F391A /* ResortDetailsView.swift */,
-				E24A763326D08270007F391A /* ResortView.swift */,
-				E24A763D26D14C92007F391A /* Favorites.swift */,
-				E24A763B26D0D529007F391A /* Facility.swift */,
-				E24A763126D08037007F391A /* WelcomeView.swift */,
+				E24A764126D1514C007F391A /* Code */,
 				E24A762B26D0769D007F391A /* resorts.json */,
 				E22D141726CEC9C100645D5D /* Assets.xcassets */,
 				E22D141C26CEC9C100645D5D /* Info.plist */,
 				E22D141926CEC9C100645D5D /* Preview Content */,
-				E24A762D26D0784E007F391A /* Resort.swift */,
-				E24A762F26D07929007F391A /* Bundle-Decodable.swift */,
 			);
 			path = SnowSeeker;
 			sourceTree = "<group>";
@@ -94,6 +85,39 @@
 				E22D141A26CEC9C100645D5D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E24A763F26D1512C007F391A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E22D141526CEC9BE00645D5D /* ContentView.swift */,
+				E24A763526D0831B007F391A /* SkiDetailsView.swift */,
+				E24A763726D08357007F391A /* ResortDetailsView.swift */,
+				E24A763326D08270007F391A /* ResortView.swift */,
+				E24A763126D08037007F391A /* WelcomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E24A764026D15139007F391A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E24A763D26D14C92007F391A /* Favorites.swift */,
+				E24A763B26D0D529007F391A /* Facility.swift */,
+				E24A762D26D0784E007F391A /* Resort.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E24A764126D1514C007F391A /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				E22D141326CEC9BE00645D5D /* SnowSeekerApp.swift */,
+				E24A762F26D07929007F391A /* Bundle-Decodable.swift */,
+				E24A763F26D1512C007F391A /* Views */,
+				E24A764026D15139007F391A /* Models */,
+			);
+			path = Code;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
