@@ -4,8 +4,12 @@
 //
 //  Created by Antonio Vega on 8/20/21.
 //
+import Foundation
 
 struct Resort: Codable, Identifiable {
+    static let allResorts: [Resort] = Bundle.main.decode("resorts.json")
+    static let example = allResorts[0]
+    
     let id: String
     let name: String
     let country: String
