@@ -16,9 +16,22 @@ class Favorites: ObservableObject {
 
     init() {
         // load our saved data
-
+        let filename = Self.getDocumentsDirectory().appendingPathComponent(saveKey)
+        
+        if let data = try? Data(contentsOf: filename) {
+            if let decoded = try? JSONDecoder().decode(Set<String>.self, from: data) {
+                self.resorts = decoded
+                return
+            }
+        }
+        
         // still here? Use an empty array
         self.resorts = []
+    }
+    
+    static private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 
     // returns true if our set contains this resort
@@ -42,5 +55,12 @@ class Favorites: ObservableObject {
 
     func save() {
         // write out our data
+        do {
+            let filename = Self.getDocumentsDirectory().appendingPathComponent(saveKey)
+            let data = try JSONEncoder().encode(resorts)
+            try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
+        } catch {
+            
+        }
     }
 }

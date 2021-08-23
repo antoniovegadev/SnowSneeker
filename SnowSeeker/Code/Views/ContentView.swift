@@ -9,11 +9,45 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var favorites = Favorites()
+    
+    @State private var sort: SortType = .Default
+    @State private var filter = Filter()
+    
+    @State private var isShowingSortMenu = false
+    @State private var isShowingFilterMenu = false
+    
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
+    
+    var resortsSortedFiltered: [Resort] {
+        var ret: [Resort] = []
+        
+        switch sort {
+        case .Default:
+            ret = self.resorts
+        case .alphabetical:
+            ret = self.resorts.sorted(by: \.name)
+        case .country:
+            ret = self.resorts.sorted(by: \.country)
+        }
+        
+        if filter.country != nil {
+            ret = ret.filter { $0.country == filter.country }
+        }
+        
+        if filter.size != nil {
+            ret = ret.filter { $0.size == filter.size }
+        }
+        
+        if filter.price != nil {
+            ret = ret.filter { $0.price == filter.price }
+        }
+        
+        return ret
+    }
 
     var body: some View {
         NavigationView {
-            List(resorts) { resort in
+            List(resortsSortedFiltered) { resort in
                 NavigationLink(destination: ResortView(resort: resort)) {
                     Image(resort.country)
                         .resizable()
@@ -44,11 +78,43 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Resorts")
+            .navigationBarItems(leading: Button(action: { isShowingFilterMenu = true }) {
+                Image(systemName: "line.horizontal.3.decrease.circle")
+            }, trailing: Button(action: { isShowingSortMenu = true }) {
+                Image(systemName: "arrow.up.arrow.down.circle")
+            })
+            .actionSheet(isPresented: $isShowingSortMenu) {
+                ActionSheet(title: Text("Select sort"), message: nil, buttons: [
+                    .default(
+                        Text("Default"),
+                        action: { sort = .Default }
+                    ),
+                    .default(
+                        Text("Alphabetical"),
+                        action: { sort = .alphabetical }
+                    ),
+                    .default(
+                        Text("Country"),
+                        action: { sort = .country }
+                    )
+                ])
+            }
+            .sheet(isPresented: $isShowingFilterMenu) {
+                FilterSelectionView(filter: $filter)
+            }
             
             WelcomeView()
         }
         .environmentObject(favorites)
         .phoneOnlyStackNavigationView()
+    }
+}
+
+extension ContentView {
+    enum SortType: String {
+        case Default = "Default"
+        case alphabetical = "Alphabetical"
+        case country = "Country"
     }
 }
 
